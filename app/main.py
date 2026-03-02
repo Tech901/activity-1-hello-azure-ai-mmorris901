@@ -45,12 +45,12 @@ def _get_openai_client():
     global _openai_client
     if _openai_client is None:
         # TODO: Uncomment and configure
-        #   from openai import AzureOpenAI
-        #   _openai_client = AzureOpenAI(
-        #       azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        #       api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        #       api_version="2024-10-21",
-        #   )
+           from openai import AzureOpenAI
+           _openai_client = AzureOpenAI(
+               azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+               api_key=os.environ["AZURE_OPENAI_API_KEY"],
+               api_version="2024-10-21",
+           )
         raise NotImplementedError("Configure the Azure OpenAI client")
     return _openai_client
 
@@ -102,11 +102,13 @@ def classify_311_request(request_text: str) -> dict:
         dict with keys: category, confidence, reasoning
     """
     # TODO: Step 1.1 - Get the OpenAI client
+    OpenAIClient= _get_openai_client()
     # TODO: Step 1.2 - Call client.chat.completions.create() with:
     #   model=os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
     #   A system message that classifies into: Pothole, Noise Complaint,
     #   Trash/Litter, Street Light, Water/Sewer, Other
     #   response_format={"type": "json_object"}, temperature=0
+    ClientChat= client.chat.completions.create()
     # TODO: Step 1.3 - Parse the JSON response with json.loads()
     raise NotImplementedError("Implement classify_311_request in Step 1")
 
