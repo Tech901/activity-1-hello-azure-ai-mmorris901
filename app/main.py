@@ -102,13 +102,29 @@ def classify_311_request(request_text: str) -> dict:
         dict with keys: category, confidence, reasoning
     """
     # TODO: Step 1.1 - Get the OpenAI client
-    OpenAIClient= _get_openai_client()
+    client = _get_openai_client()
     # TODO: Step 1.2 - Call client.chat.completions.create() with:
-    #   model=os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
+    model=os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
     #   A system message that classifies into: Pothole, Noise Complaint,
     #   Trash/Litter, Street Light, Water/Sewer, Other
-    #   response_format={"type": "json_object"}, temperature=0
-    ClientChat= client.chat.completions.create()
+    message = [
+        {
+        "role": "system", 
+        "content": 
+        "You are a complaint classification system. "
+        "Classify the user's complaint text into one of these six categories:"
+        "Pothole, Noise Complaint, Trash/Litter, Street Light, Water/Sewer, Other. Return a response as a JSON object with one field being "Category","
+        "one field being "Confidence", and the final field being "Reasoning"."
+        
+        },
+        {
+            "role": "user",
+            "complaint": "Somebody dumped a whole living room set in the vacant lot on Chelsea. Now the rats are moving in."
+        }
+    ]
+    response_format={"type": "json_object"}, 
+    temperature=0
+
     # TODO: Step 1.3 - Parse the JSON response with json.loads()
     raise NotImplementedError("Implement classify_311_request in Step 1")
 
